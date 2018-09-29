@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>冬冬聊天室</title>
+</head>
+<body>
+    <textarea id ="text" ></textarea>
+    <button id ="but">发送内容</button>
+</body>
+   <script type="text/javascript" src="http://wulv5.com/js/socket.io.min.js"></script>
+   <script type="text/javascript">
+      let socket = io.connect("/");// 连接远程socket服务；
+      document.getElementById('but').onclick = function () {
+          let val = document.getElementById("text").value;
+          if (!val)return;
+          document.getElementById("text").value = "";
+          socket.send(val);
+      }
+      socket.on("message", function(mes){
+        let p  = document.createElement('p');
+        p.innerHTML = mes;
+        document.body.appendChild(p);
+      });
+   </script>
+</html>
